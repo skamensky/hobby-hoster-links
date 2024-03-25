@@ -22,7 +22,7 @@
             Light:  css/skeleton-light.css
             Dark:   css/skeleton-dark.css
      -->
-     <link rel="stylesheet" href="css/skeleton-light.css" id="theme-style">
+     <link rel="stylesheet" id="theme-style">
 
     <!-- Brand Styles -->
     <link rel="stylesheet" href="css/brands.css">
@@ -40,7 +40,7 @@
   </div>
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
+  <div class="container" id="container" style="display: none;">
     <div class="row">
       <div class="column" style="margin-top: 10%">
 
@@ -159,12 +159,32 @@
     const currentTheme = document.getElementById('theme-style');
     if (currentTheme.getAttribute('href') === 'css/skeleton-light.css') {
       currentTheme.href = 'css/skeleton-dark.css';
-      // currentTheme.media = '(prefers-color-scheme: dark)';
+      //save preference to local storage
+      localStorage.setItem('theme', 'dark');
     } else {
       currentTheme.href = 'css/skeleton-light.css';
       // currentTheme.media = '(prefers-color-scheme: light)';
+      localStorage.setItem('theme', 'light');
     }
   }
+
+  function initTheme(){
+    const currentTheme = document.getElementById('theme-style');
+    // if localStorage is empty, set to light:
+    if (localStorage.getItem('theme') === null) {
+      localStorage.setItem('theme', 'light');
+    }
+
+    if (localStorage.getItem('theme') === 'dark') {
+      currentTheme.href = 'css/skeleton-dark.css';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      currentTheme.href = 'css/skeleton-light.css';
+      localStorage.setItem('theme', 'light');
+    }
+    document.getElementById('container').style.display = 'block';
+  }
+  initTheme();
 </script>
 
 </html>
